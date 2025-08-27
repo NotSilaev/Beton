@@ -15,6 +15,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    # Internal apps
+    'apps.auth.apps.AuthConfig',
+
+    # Django apps
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
