@@ -13,6 +13,10 @@ class ProjectSettings(BaseSettings):
     DB_USER: str
     DB_PASSWORD: str
 
+    # Telegram Bots
+    TELEGRAM_LOGS_BOT_TOKEN: str
+    TELEGRAM_LOGS_BOT_USERS: list
+
     class Config:
         env_file = Path(__file__).parent / '.env'
 

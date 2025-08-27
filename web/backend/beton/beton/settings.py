@@ -21,11 +21,15 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # Django middleware
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Internal middleware
+    'beton.middleware.ExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'beton.urls'
