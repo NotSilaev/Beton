@@ -1,3 +1,5 @@
+from django.http.request import HttpRequest
+
 from typing import Any
 from datetime import datetime
 from zoneinfo import ZoneInfo
@@ -18,3 +20,12 @@ def getCurrentDateTime(timezone_code: str = 'UTC', exclude_timezone: bool = Fals
     if exclude_timezone:
         current_datetime = current_datetime.replace(tzinfo=None)
     return current_datetime
+
+
+def getClientIP(request: HttpRequest) -> str:
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip

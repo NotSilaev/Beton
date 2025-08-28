@@ -34,6 +34,7 @@ MIDDLEWARE = [
 
     # Internal middleware
     'beton.middleware.ExceptionMiddleware',
+    'beton.middleware.RateLimitMiddleware',
 ]
 
 ROOT_URLCONF = 'beton.urls'
