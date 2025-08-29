@@ -9,7 +9,7 @@ from django.db import transaction
 from utils import makeResponseData, makeModelFilterKwargs
 
 from apps.auth.access import checkAuthToken
-from apps.store.models import Category, Product, ProductVariant, ProductVariantImage, Order
+from apps.store.models import Category, Product, ProductVariant, ProductVariantImage, Order, OrderItem
 from apps.store.serializers import (
     CategorySerializer, 
     ProductSerializer, 
@@ -294,9 +294,24 @@ class OrderList(APIView):
         return Response(response_data, status=status.HTTP_200_OK)
 
     def post(self, request: Request) -> Response:
-        serializer = OrderSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
+        data = request.data
+
+        with transaction.atomic():
+            serializer = OrderSerializer(data=data)
+            if serializer.is_valid(raise_exception=True):
+                order = serializer.save()
+
+            order_items = []
+            for product_data in data['products']:
+                try:
+                    product = ProductVariant.objects.get(id=product_data['id'])
+                    order_items.append(
+                        OrderItem(order=order, product=product, quantity=product_data['quantity'])
+                    )
+                except ProductVariant.DoesNotExist:
+                    continue
+            OrderItem.objects.bulk_create(order_items)
+
             response_data = makeResponseData(
                 status=201,
                 message='Created',

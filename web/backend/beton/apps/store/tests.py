@@ -405,13 +405,12 @@ class OrderTests(APITestCase):
         url = reverse('order_list')
 
         data = {
-            'products': [variant.id for variant in variants],
+            'products': [{'id': variant.id, 'quantity': 5} for variant in variants],
             'fullname': 'Nikita Silaev',
             'contact': '+7 999 888 77 66',
             'contact_method': 'phone'
         }
-
-        response = self.client.post(url, data, format='multipart') 
+        response = self.client.post(url, data, format='json') 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
@@ -442,7 +441,7 @@ class OrderTests(APITestCase):
         variants = ProductVariant.objects.bulk_create(variants_to_create)
 
         data = {
-            'products': [variant.id for variant in variants],
+            'products': [{'id': variant.id, 'quantity': 5} for variant in variants],
             'fullname': 'Nikita Silaev',
             'contact': '+7 999 888 77 66',
             'contact_method': 'phone'
@@ -462,7 +461,7 @@ class OrderTests(APITestCase):
         auth_header = f'Bearer {plain_auth_token}'
 
         data = {
-            'products': [variant.id for variant in variants[:2]],
+            'products': [{'id': variant.id, 'quantity': 5} for variant in variants[:2]],
             'contact': '+7 999 888 77 66',
             'contact_method': 'telegram'
         }
@@ -503,7 +502,7 @@ class OrderTests(APITestCase):
         variants = ProductVariant.objects.bulk_create(variants_to_create)
 
         data = {
-            'products': [variant.id for variant in variants],
+            'products': [{'id': variant.id, 'quantity': 5} for variant in variants],
             'fullname': 'Nikita Silaev',
             'contact': '+7 999 888 77 66',
             'contact_method': 'telegram'

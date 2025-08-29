@@ -91,7 +91,7 @@ class ProductVariantImage(models.Model):
 
 class Order(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    products = models.ManyToManyField(ProductVariant)
+    products = models.ManyToManyField(ProductVariant, through='OrderItem')
     fullname = models.CharField(max_length=50)
     contact = models.CharField(max_length=100)
     contact_method = models.CharField(max_length=30)
@@ -103,3 +103,11 @@ class Order(models.Model):
         db_table = 'orders'
 
 
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(ProductVariant, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        db_table = 'order_items'
+        unique_together = ['order', 'product']
