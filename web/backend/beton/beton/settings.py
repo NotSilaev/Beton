@@ -17,14 +17,21 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # Internal apps
     'apps.auth.apps.AuthConfig',
+    'apps.store.apps.StoreConfig',
 
     # Django apps
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
+
+    # External apps
+    'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+
     # Django middleware
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -38,6 +45,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'beton.urls'
+
+REST_FRAMEWORK = { 
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    'DEFAULT_PERMISSION_CLASSES': [],
+    'UNAUTHENTICATED_USER': None,
+    'EXCEPTION_HANDLER': 'beton.exceptions.validationExceptionsHandler',
+}
 
 TEMPLATES = [
     {

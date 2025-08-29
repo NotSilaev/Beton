@@ -1,4 +1,8 @@
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 
-urlpatterns = []
+urlpatterns = [
+    path('store/', include('apps.store.urls'), name='store'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
