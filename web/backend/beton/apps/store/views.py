@@ -223,11 +223,12 @@ class ProductVariantList(APIView):
                 variant = serializer.save()
 
             images = request.FILES.getlist('images')
+            variant_images = []
             for image in images:
-                ProductVariantImage.objects.create(
-                    product_variant=variant,
-                    image=image
+                variant_images.append(
+                    ProductVariantImage(product_variant=variant, image=image)
                 )
+            ProductVariantImage.objects.bulk_create(variant_images)
 
             response_data = makeResponseData(
                 status=201,
