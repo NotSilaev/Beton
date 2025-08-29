@@ -21,7 +21,10 @@ class ProjectSettings(BaseSettings):
 
     # Telegram Bots
     TELEGRAM_LOGS_BOT_TOKEN: str
-    TELEGRAM_LOGS_BOT_USERS: list
+    TELEGRAM_LOGS_BOT_USERS: list    
+    
+    TELEGRAM_ORDERS_BOT_TOKEN: str
+    TELEGRAM_ORDERS_BOT_USERS: list
 
     class Config:
         env_file = Path(__file__).parent / '.env'

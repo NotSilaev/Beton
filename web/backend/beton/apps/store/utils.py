@@ -2,6 +2,7 @@ from django.db import models
 
 import typing
 import uuid
+from decimal import Decimal
 
 
 Category = typing.NewType('Category', models.Model)
@@ -21,3 +22,10 @@ def getProductVariantImageLocation(instance: ProductVariantImage, filename: str)
         f'{image_id}.webp'
     )
     return image_location
+
+def formatPrice(price: Decimal) -> str:
+    "Formats the price by adding spaces between thousands and the ruble symbol."
+    
+    integer_part = str(price).split('.')[0]
+    formatted_integer = '{0:,}'.format(int(integer_part)).replace(',', ' ')
+    return f"{formatted_integer} ₽"
