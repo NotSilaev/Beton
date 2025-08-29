@@ -7,6 +7,7 @@ from aiogram.filters import CommandStart, Command
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from exceptions import exceptions_catcher
+from access import access_checker
 from utils import respondEvent, makeGreetingMessage, getUserName
 
 
@@ -17,6 +18,7 @@ router = Router(name=__name__)
 @router.callback_query(F.data == 'start')
 @router.message(F.text & (~F.text.startswith("/")))
 @exceptions_catcher()
+@access_checker()
 async def start(event: Message | CallbackQuery) -> None:
     user_id = event.from_user.id
     user_name: str = getUserName(user=event.from_user)
