@@ -95,6 +95,7 @@ class Order(models.Model):
     fullname = models.CharField(max_length=50)
     contact = models.CharField(max_length=100)
     contact_method = models.CharField(max_length=30)
+    status = models.CharField(max_length=30, default='active')
     deadline = models.DateTimeField(null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)

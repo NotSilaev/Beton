@@ -280,7 +280,7 @@ class OrderList(APIView):
     def get(self, request: Request) -> Response:
         orders = Order.objects.all()
 
-        filters = ['contact', 'contact_method']
+        filters = ['contact', 'contact_method', 'status']
         query_params = request.query_params
         filter_kwargs = makeModelFilterKwargs(filters, query_params)
         if filter_kwargs:

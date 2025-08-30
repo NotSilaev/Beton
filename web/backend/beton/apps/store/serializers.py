@@ -27,5 +27,7 @@ class ProductVariantSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ['id', 'products', 'fullname', 'contact', 'contact_method', 'deadline', 'updated_at', 'created_at']
+        fields = [
+            'id', 'products', 'fullname', 'contact', 'contact_method', 'status', 'deadline', 'updated_at', 'created_at'
+        ]
         read_only_fields = ['id']
