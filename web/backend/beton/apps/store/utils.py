@@ -17,7 +17,7 @@ def getProductVariantImageLocation(instance: ProductVariantImage, filename: str)
     image_id = uuid.uuid4()
     image_location = (
         'store/products/'
-        f'{instance.product_variant.product.slug}/'
+        f'{instance.product_variant.base_product.slug}/'
         f'{instance.product_variant.slug}/'
         f'{image_id}.webp'
     )

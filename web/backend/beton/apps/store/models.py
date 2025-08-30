@@ -57,7 +57,7 @@ class Product(models.Model):
 
 class ProductVariant(models.Model):
     id = models.BigAutoField(primary_key=True)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='variants')
+    base_product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='variants')
     slug = models.SlugField(max_length=150, unique=True)
     title = models.CharField(max_length=100, unique=True)
     configuration = models.JSONField(null=True, blank=True)
@@ -91,7 +91,7 @@ class ProductVariantImage(models.Model):
 
 class Order(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    products = models.ManyToManyField(ProductVariant, through='OrderItem')
+    items = models.ManyToManyField(ProductVariant, through='OrderItem')
     fullname = models.CharField(max_length=50)
     contact = models.CharField(max_length=100)
     contact_method = models.CharField(max_length=30)

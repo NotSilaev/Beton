@@ -185,7 +185,7 @@ class ProductVariantList(APIView):
         variants = (
             ProductVariant.objects
             .prefetch_related('images')
-            .filter(product__slug=product_slug)
+            .filter(base_product__slug=product_slug)
         )
 
         serialized_variants = ProductVariantSerializer(variants, many=True).data
@@ -241,7 +241,7 @@ class ProductVariantList(APIView):
 class ProductVariantDetail(APIView):
     def getObject(self, product_slug: str, variant_slug: str) -> Product:
         try:
-            return ProductVariant.objects.get(product__slug=product_slug, slug=variant_slug)
+            return ProductVariant.objects.get(base_product__slug=product_slug, slug=variant_slug)
         except ProductVariant.DoesNotExist:
             raise Http404
 
@@ -303,11 +303,11 @@ class OrderList(APIView):
                 order = serializer.save()
 
             order_items = []
-            for product_data in data['products']:
+            for item_data in data['items']:
                 try:
-                    product = ProductVariant.objects.get(id=product_data['id'])
+                    product = ProductVariant.objects.get(id=item_data['id'])
                     order_items.append(
-                        OrderItem(order=order, product=product, quantity=product_data['quantity'])
+                        OrderItem(order=order, product=product, quantity=item_data['quantity'])
                     )
                 except ProductVariant.DoesNotExist:
                     continue

@@ -252,7 +252,7 @@ class ProductVariantTests(APITestCase):
 
         url = reverse('product_variant_list', kwargs={'product_slug': product.slug})
         data = {
-            'product': product.pk,
+            'base_product_id': product.pk,
             'title': 'Green flowerpot XXL',
             'price': 15_000,
             'stock': 10,
@@ -281,7 +281,7 @@ class ProductVariantTests(APITestCase):
 
         # Create product variant
         data = {
-            'product': product.pk,
+            'base_product_id': product.pk,
             'title': 'Green flowerpot',
             'price': 15_000,
             'stock': 10,
@@ -298,7 +298,7 @@ class ProductVariantTests(APITestCase):
         
         # Change product variant data
         data = {
-            'product': product.pk,
+            'base_product_id': product.pk,
             'title': 'Green flowerpot XXL',
             'price': 25_000,
             'stock': 5,
@@ -337,7 +337,7 @@ class ProductVariantTests(APITestCase):
 
         # Create product variant
         data = {
-            'product': product.pk,
+            'base_product_id': product.pk,
             'title': 'Green flowerpot XXL',
             'price': 15_000,
             'stock': 10,
@@ -392,7 +392,7 @@ class OrderTests(APITestCase):
             for variant_index in range(3):
                 variant_id = str(uuid.uuid4()).split('-')[0]
                 variants_to_create.append(ProductVariant(
-                    product=product, 
+                    base_product=product, 
                     slug=f'variant-{variant_id}', 
                     title=f'Test variant {variant_id}',
                     configuration={'size': 10, 'color': 'white'},
@@ -405,7 +405,7 @@ class OrderTests(APITestCase):
         url = reverse('order_list')
 
         data = {
-            'products': [{'id': variant.id, 'quantity': 5} for variant in variants],
+            'items': [{'id': variant.id, 'quantity': 5} for variant in variants],
             'fullname': 'Nikita Silaev',
             'contact': '+7 999 888 77 66',
             'contact_method': 'phone'
@@ -430,7 +430,7 @@ class OrderTests(APITestCase):
             for variant_index in range(3):
                 variant_id = str(uuid.uuid4()).split('-')[0]
                 variants_to_create.append(ProductVariant(
-                    product=product, 
+                    base_product=product, 
                     slug=f'variant-{variant_id}', 
                     title=f'Test variant {variant_id}',
                     configuration={'size': 10, 'color': 'white'},
@@ -441,7 +441,7 @@ class OrderTests(APITestCase):
         variants = ProductVariant.objects.bulk_create(variants_to_create)
 
         data = {
-            'products': [{'id': variant.id, 'quantity': 5} for variant in variants],
+            'items': [{'id': variant.id, 'quantity': 5} for variant in variants],
             'fullname': 'Nikita Silaev',
             'contact': '+7 999 888 77 66',
             'contact_method': 'phone'
@@ -461,7 +461,7 @@ class OrderTests(APITestCase):
         auth_header = f'Bearer {plain_auth_token}'
 
         data = {
-            'products': [{'id': variant.id, 'quantity': 5} for variant in variants[:2]],
+            'items': [{'id': variant.id, 'quantity': 5} for variant in variants[:2]],
             'contact': '+7 999 888 77 66',
             'contact_method': 'telegram'
         }
@@ -491,7 +491,7 @@ class OrderTests(APITestCase):
             for variant_index in range(3):
                 variant_id = str(uuid.uuid4()).split('-')[0]
                 variants_to_create.append(ProductVariant(
-                    product=product, 
+                    base_product=product, 
                     slug=f'variant-{variant_id}', 
                     title=f'Test variant {variant_id}',
                     configuration={'size': 10, 'color': 'white'},
@@ -502,7 +502,7 @@ class OrderTests(APITestCase):
         variants = ProductVariant.objects.bulk_create(variants_to_create)
 
         data = {
-            'products': [{'id': variant.id, 'quantity': 5} for variant in variants],
+            'items': [{'id': variant.id, 'quantity': 5} for variant in variants],
             'fullname': 'Nikita Silaev',
             'contact': '+7 999 888 77 66',
             'contact_method': 'telegram'
