@@ -28,7 +28,7 @@ def OrderPostSaveHandler(sender, instance, created, **kwargs):
             order_cart_products.append(
                 f'*{i+1}.* '
                 f'{product.title} ({configuration}) [{quantity} шт.] — '
-                f'*{formatPrice(total_price)}* ({formatPrice(total_price)} / шт.)'
+                f'*{formatPrice(total_price)}* ({formatPrice(product.price)} / шт.)'
             )
         order_cart = '\n\n'.join(order_cart_products)
 
