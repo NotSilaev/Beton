@@ -7,7 +7,7 @@ import asyncio
 
 
 async def main() -> None:
-    bot = Bot(token=settings.telegram_bot_token)
+    bot = Bot(token=settings.TELEGRAM_BOT_TOKEN)
     dp = Dispatcher()
 
     # Handlers routers

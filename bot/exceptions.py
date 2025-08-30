@@ -35,7 +35,7 @@ def exceptions_catcher():
                         "*🙏 Приносим извинения за предоставленные неудобства.*"
                     )
 
-                    telegram_api = TelegramAPI(settings.telegram_bot_token)
+                    telegram_api = TelegramAPI(settings.TELEGRAM_BOT_TOKEN)
                     telegram_api.sendRequest(
                         request_method='POST',
                         api_method='sendMessage',

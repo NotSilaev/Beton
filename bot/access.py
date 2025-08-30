@@ -4,7 +4,7 @@ import functools
 
 
 def hasAccess(user_id: int) -> bool:
-    if user_id in settings.telegram_bot_white_list:
+    if user_id in settings.TELEGRAM_BOT_WHITE_LIST:
         return True
     return False
 
