@@ -30,7 +30,7 @@ async def start(event: Message | CallbackQuery) -> None:
     )
 
     keyboard = InlineKeyboardBuilder()
-    keyboard.button(text='Hello, world!', callback_data='#')
+    keyboard.button(text='🛒 Список заказов', callback_data='orders')
 
     await respondEvent(
         event,

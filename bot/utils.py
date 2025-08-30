@@ -3,6 +3,7 @@ from aiogram.types.user import User
 
 from datetime import datetime
 from zoneinfo import ZoneInfo
+from decimal import Decimal
 
 
 async def respondEvent(event: Message | CallbackQuery, **kwargs) -> int:
@@ -73,3 +74,11 @@ def getUserName(user: User) -> str:
         user_name = f'User №{user_id}'
 
     return user_name
+
+
+def formatPrice(price: Decimal) -> str:
+    "Formats the price by adding spaces between thousands and the ruble symbol."
+    
+    integer_part = str(price).split('.')[0]
+    formatted_integer = '{0:,}'.format(int(integer_part)).replace(',', ' ')
+    return f"{formatted_integer} ₽"

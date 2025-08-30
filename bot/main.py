@@ -1,7 +1,7 @@
 from aiogram import Bot, Dispatcher
 
 from config import settings
-from handlers import common
+from handlers import common, orders
 
 import asyncio
 
@@ -12,6 +12,7 @@ async def main() -> None:
 
     # Handlers routers
     dp.include_router(common.router)
+    dp.include_router(orders.router)
 
     await dp.start_polling(bot)
 
